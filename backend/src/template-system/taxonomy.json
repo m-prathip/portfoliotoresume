@@ -1,0 +1,75 @@
+{
+  "mainCategories": [
+    "ATS",
+    "Student",
+    "Technology",
+    "Business",
+    "Creative",
+    "Academic",
+    "International"
+  ],
+  "engineering": [
+    "AI & Data Science",
+    "Computer Science",
+    "Information Technology",
+    "Electronics",
+    "Electrical",
+    "Mechanical",
+    "Civil"
+  ],
+  "roles": [
+    "Software Developer",
+    "AI Engineer",
+    "Machine Learning Engineer",
+    "Data Analyst",
+    "Data Scientist",
+    "Data Engineer",
+    "Frontend Developer",
+    "Backend Developer",
+    "Full Stack Developer",
+    "Cloud Engineer",
+    "DevOps Engineer",
+    "Cybersecurity",
+    "UI/UX Designer",
+    "Business Analyst",
+    "Finance",
+    "Marketing",
+    "Sales",
+    "HR",
+    "Operations",
+    "Researcher",
+    "Intern",
+    "Graduate"
+  ],
+  "styles": [
+    "minimal",
+    "modern",
+    "professional",
+    "corporate",
+    "creative",
+    "technical",
+    "academic",
+    "compact",
+    "project-focused",
+    "education-focused",
+    "ATS"
+  ],
+  "atsLevels": [
+    "excellent",
+    "good",
+    "moderate",
+    "creative"
+  ],
+  "layouts": [
+    "single-column",
+    "two-column",
+    "multi-column"
+  ],
+  "columns": [
+    "single",
+    "30/70",
+    "35/65",
+    "40/60",
+    "45/55"
+  ]
+}

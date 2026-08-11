@@ -1,0 +1,36 @@
+{
+  "name": "resume-platform-backend",
+  "version": "0.1.0",
+  "private": true,
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit",
+    "seed:templates": "tsx src/db/seed/seedTemplates.ts",
+    "seed:presets": "tsx src/db/seed/seedStylePresets.ts",
+    "seed:library": "tsx src/db/seed/seedTemplateLibrary.ts",
+    "validate:library": "tsx scripts/validateTemplates.ts",
+    "detect:duplicates": "tsx scripts/detectDuplicates.ts",
+    "generate:manifest": "tsx scripts/generateTemplateManifest.ts"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "handlebars": "^4.7.8",
+    "pg": "^8.12.0",
+    "playwright": "^1.45.3",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.14.10",
+    "@types/pg": "^8.11.6",
+    "tsx": "^4.16.2",
+    "typescript": "^5.5.3"
+  }
+}

@@ -1,0 +1,36 @@
+/* Data & Analytics Fresher — clean grid feel, teal accent, tabular skill rows. */
+.resume[data-template="data-analytics-fresher"] {
+  --font-heading: var(--user-font-heading, 'Verdana', 'Arial', sans-serif);
+  --font-body: var(--user-font-body, 'Arial', sans-serif);
+  --color-primary: var(--user-color-primary, #0b2027);
+  --color-accent: var(--user-color-accent, #0d7377);
+  --color-muted: #56696d;
+  --spacing-unit: var(--user-spacing-unit, 13px);
+
+  font-family: var(--font-body);
+  color: var(--color-primary);
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 32px;
+  line-height: 1.45;
+  font-size: 12.5px;
+}
+.resume[data-template="data-analytics-fresher"] .header { border-bottom: 1px solid #d9e2e3; padding-bottom: 10px; margin-bottom: var(--spacing-unit); }
+.resume[data-template="data-analytics-fresher"] .name { font-family: var(--font-heading); font-size: 23px; margin: 0 0 2px; letter-spacing: 0.3px; }
+.resume[data-template="data-analytics-fresher"] .target-role { margin: 0 0 6px; color: var(--color-accent); font-weight: 700; font-size: 12.5px; }
+.resume[data-template="data-analytics-fresher"] .contact-line { font-size: 11px; color: var(--color-muted); }
+.resume[data-template="data-analytics-fresher"] .contact-line span:not(:last-child)::after { content: " · "; }
+.resume[data-template="data-analytics-fresher"] .section { margin-bottom: var(--spacing-unit); }
+.resume[data-template="data-analytics-fresher"] .section h2 {
+  font-family: var(--font-heading); font-size: 12.5px; text-transform: uppercase; letter-spacing: 1.2px;
+  color: #fff; background: var(--color-accent); padding: 4px 8px; margin: 0 0 8px; display: inline-block;
+}
+.resume[data-template="data-analytics-fresher"] .entry { margin-bottom: 8px; }
+.resume[data-template="data-analytics-fresher"] .entry-row { display: flex; justify-content: space-between; align-items: baseline; }
+.resume[data-template="data-analytics-fresher"] .entry-sub { color: var(--color-muted); font-size: 12px; }
+.resume[data-template="data-analytics-fresher"] .entry-desc { margin: 3px 0; }
+.resume[data-template="data-analytics-fresher"] .entry-detail { font-size: 11.5px; color: var(--color-muted); }
+.resume[data-template="data-analytics-fresher"] .dates { font-size: 11.5px; color: var(--color-muted); white-space: nowrap; }
+.resume[data-template="data-analytics-fresher"] .skill-row { margin-bottom: 3px; font-size: 12px; }
+.resume[data-template="data-analytics-fresher"] ul { margin: 4px 0; padding-left: 18px; }
+.resume[data-template="data-analytics-fresher"] li { margin-bottom: 2px; font-size: 12px; }

@@ -1,0 +1,37 @@
+/* Business Fresher — centered, formal, generous whitespace, navy/gold. */
+.resume[data-template="business-fresher"] {
+  --font-heading: var(--user-font-heading, 'Cambria', 'Georgia', serif);
+  --font-body: var(--user-font-body, 'Calibri', 'Arial', sans-serif);
+  --color-primary: var(--user-color-primary, #14213d);
+  --color-accent: var(--user-color-accent, #b08900);
+  --color-muted: #5b6472;
+  --spacing-unit: var(--user-spacing-unit, 16px);
+
+  font-family: var(--font-body);
+  color: var(--color-primary);
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 36px;
+  line-height: 1.5;
+  font-size: 13px;
+}
+.resume[data-template="business-fresher"] .header { text-align: center; margin-bottom: calc(var(--spacing-unit) * 1.3); }
+.resume[data-template="business-fresher"] .name { font-family: var(--font-heading); font-size: 26px; margin: 0 0 4px; letter-spacing: 1px; }
+.resume[data-template="business-fresher"] .target-role { margin: 0 0 8px; color: var(--color-accent); font-weight: 600; text-transform: uppercase; font-size: 11.5px; letter-spacing: 1.5px; }
+.resume[data-template="business-fresher"] .contact-line { font-size: 11.5px; color: var(--color-muted); }
+.resume[data-template="business-fresher"] .contact-line span:not(:last-child)::after { content: "   •   "; }
+.resume[data-template="business-fresher"] .section { margin-bottom: var(--spacing-unit); }
+.resume[data-template="business-fresher"] .section h2 {
+  font-family: var(--font-heading); font-size: 13.5px; text-align: center; text-transform: uppercase; letter-spacing: 2px;
+  color: var(--color-accent); margin: 0 0 10px; position: relative;
+}
+.resume[data-template="business-fresher"] .section h2::after { content: ""; display: block; width: 40px; height: 2px; background: var(--color-accent); margin: 6px auto 0; }
+.resume[data-template="business-fresher"] .entry { margin-bottom: 9px; }
+.resume[data-template="business-fresher"] .entry-row { display: flex; justify-content: space-between; align-items: baseline; }
+.resume[data-template="business-fresher"] .entry-sub { font-style: italic; color: var(--color-muted); font-size: 12.5px; }
+.resume[data-template="business-fresher"] .entry-desc { margin: 3px 0; }
+.resume[data-template="business-fresher"] .entry-detail { font-size: 12px; color: var(--color-muted); }
+.resume[data-template="business-fresher"] .dates { font-size: 12px; color: var(--color-muted); white-space: nowrap; }
+.resume[data-template="business-fresher"] .skill-row { margin-bottom: 3px; font-size: 12.5px; text-align: center; }
+.resume[data-template="business-fresher"] ul { margin: 4px 0; padding-left: 18px; }
+.resume[data-template="business-fresher"] li { margin-bottom: 2px; font-size: 12.5px; }

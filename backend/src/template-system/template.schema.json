@@ -1,0 +1,285 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://resume-builder.local/schemas/template.schema.json",
+  "title": "Resume Builder Template",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "templateId",
+    "baseTemplateId",
+    "name",
+    "category",
+    "layout",
+    "tokens",
+    "sections",
+    "metadata",
+    "license"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string"
+    },
+    "templateId": {
+      "type": "string",
+      "pattern": "^TMP-[A-Z0-9_-]+$"
+    },
+    "baseTemplateId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "category": {
+      "type": "string"
+    },
+    "subcategory": {
+      "type": "string"
+    },
+    "layout": {
+      "type": "object",
+      "required": [
+        "type",
+        "readingOrder"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "single-column",
+            "two-column",
+            "multi-column"
+          ]
+        },
+        "readingOrder": {
+          "enum": [
+            "main-then-sidebar",
+            "sidebar-then-main",
+            "linear"
+          ]
+        },
+        "sidebar": {
+          "enum": [
+            "left",
+            "right",
+            "none"
+          ]
+        },
+        "sidebarWidth": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 60
+        },
+        "page": {
+          "type": "object",
+          "properties": {
+            "size": {
+              "enum": [
+                "A4",
+                "LETTER"
+              ]
+            },
+            "margin": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "number",
+                "minimum": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    "tokens": {
+      "type": "object",
+      "required": [
+        "fontHeading",
+        "fontBody",
+        "accentColor",
+        "textColor",
+        "backgroundColor"
+      ],
+      "properties": {
+        "fontHeading": {
+          "type": "string"
+        },
+        "fontBody": {
+          "type": "string"
+        },
+        "fontSizeBody": {
+          "type": "number",
+          "minimum": 6,
+          "maximum": 24
+        },
+        "fontSizeHeading": {
+          "type": "number",
+          "minimum": 8,
+          "maximum": 40
+        },
+        "lineHeight": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 2.5
+        },
+        "letterSpacing": {
+          "type": "number",
+          "minimum": -2,
+          "maximum": 5
+        },
+        "accentColor": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$"
+        },
+        "textColor": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$"
+        },
+        "mutedColor": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$"
+        },
+        "backgroundColor": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$"
+        },
+        "sectionSpacing": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 80
+        },
+        "itemSpacing": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 40
+        }
+      }
+    },
+    "header": {
+      "type": "object"
+    },
+    "sections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "component",
+          "enabled",
+          "order"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "component": {
+            "type": "string"
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "column": {
+            "enum": [
+              "main",
+              "sidebar",
+              "full"
+            ]
+          },
+          "order": {
+            "type": "number"
+          },
+          "title": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "required": [
+        "atsLevel",
+        "recommendedRoles",
+        "tags"
+      ],
+      "properties": {
+        "atsLevel": {
+          "enum": [
+            "excellent",
+            "good",
+            "moderate",
+            "creative"
+          ]
+        },
+        "recommendedRoles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "experienceLevel": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "isPremium": {
+          "type": "boolean"
+        },
+        "isFree": {
+          "type": "boolean"
+        }
+      }
+    },
+    "license": {
+      "type": "object",
+      "required": [
+        "type",
+        "source",
+        "commercialUseAllowed",
+        "modificationAllowed",
+        "redistributionAllowed",
+        "attributionRequired"
+      ],
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        },
+        "author": {
+          "type": "string"
+        },
+        "repository": {
+          "type": "string"
+        },
+        "license": {
+          "type": "string"
+        },
+        "licenseUrl": {
+          "type": "string"
+        },
+        "commercialUseAllowed": {
+          "type": "boolean"
+        },
+        "modificationAllowed": {
+          "type": "boolean"
+        },
+        "redistributionAllowed": {
+          "type": "boolean"
+        },
+        "attributionRequired": {
+          "type": "boolean"
+        },
+        "attributionText": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

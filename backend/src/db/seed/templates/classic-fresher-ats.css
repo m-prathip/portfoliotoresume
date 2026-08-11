@@ -1,0 +1,37 @@
+/* Classic Fresher ATS — design tokens as CSS variables so the editor's
+   font/color/spacing controls can override them without touching layout. */
+.resume[data-template="classic-fresher-ats"] {
+  --font-heading: var(--user-font-heading, 'Georgia', serif);
+  --font-body: var(--user-font-body, 'Helvetica', 'Arial', sans-serif);
+  --color-primary: var(--user-color-primary, #1a1a1a);
+  --color-accent: var(--user-color-accent, #2a2a2a);
+  --color-muted: #555555;
+  --spacing-unit: var(--user-spacing-unit, 14px);
+
+  font-family: var(--font-body);
+  color: var(--color-primary);
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 32px;
+  line-height: 1.45;
+  font-size: 13px;
+}
+.resume[data-template="classic-fresher-ats"] .header { text-align: center; margin-bottom: calc(var(--spacing-unit) * 1.5); }
+.resume[data-template="classic-fresher-ats"] .name { font-family: var(--font-heading); font-size: 24px; margin: 0 0 4px; letter-spacing: 0.5px; }
+.resume[data-template="classic-fresher-ats"] .target-role { margin: 0 0 6px; color: var(--color-accent); font-weight: 600; }
+.resume[data-template="classic-fresher-ats"] .contact-line { font-size: 11.5px; color: var(--color-muted); }
+.resume[data-template="classic-fresher-ats"] .contact-line span:not(:last-child)::after { content: " • "; }
+.resume[data-template="classic-fresher-ats"] .section { margin-bottom: var(--spacing-unit); }
+.resume[data-template="classic-fresher-ats"] .section h2 {
+  font-family: var(--font-heading); font-size: 13.5px; text-transform: uppercase; letter-spacing: 1px;
+  border-bottom: 1.5px solid var(--color-primary); padding-bottom: 3px; margin: 0 0 8px;
+}
+.resume[data-template="classic-fresher-ats"] .entry { margin-bottom: 8px; }
+.resume[data-template="classic-fresher-ats"] .entry-row { display: flex; justify-content: space-between; align-items: baseline; }
+.resume[data-template="classic-fresher-ats"] .entry-sub { font-style: italic; color: var(--color-muted); font-size: 12.5px; }
+.resume[data-template="classic-fresher-ats"] .entry-desc { margin: 3px 0; }
+.resume[data-template="classic-fresher-ats"] .entry-detail { font-size: 12px; color: var(--color-muted); }
+.resume[data-template="classic-fresher-ats"] .dates { font-size: 12px; color: var(--color-muted); white-space: nowrap; }
+.resume[data-template="classic-fresher-ats"] .skill-row { margin-bottom: 3px; font-size: 12.5px; }
+.resume[data-template="classic-fresher-ats"] ul { margin: 4px 0; padding-left: 18px; }
+.resume[data-template="classic-fresher-ats"] li { margin-bottom: 2px; font-size: 12.5px; }
