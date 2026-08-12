@@ -79,50 +79,25 @@ export default function Home() {
       }
 
       let data;
-      try {
-        const response = await fetch(`${API_BASE}/portfolios`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            user_id: userId,
-            portfolio_url: url,
-          }),
-        });
+      const response = await fetch(`${API_BASE}/portfolios`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: userId,
+          portfolio_url: url,
+        }),
+      });
 
-        const json = await response.json();
+      const json = await response.json();
 
-        if (!response.ok) {
-          throw new Error(
-            json.error || "Portfolio analysis failed."
-          );
-        }
-        data = json;
-      } catch (apiErr) {
-        console.warn("API analysis failed (likely due to missing LLM env), using mock data fallback:", apiErr);
-        // Provide mock data so the user can still proceed to the editor
-        data = {
-          portfolio: { id: `mock-${generateId()}` },
-          structured: {
-            personal: { full_name: "Mock User", email: "guest@example.com", portfolio: url },
-            education: [],
-            skills: { "Languages": ["JavaScript", "TypeScript"], "Tools": ["React", "Next.js"] },
-            projects: [
-              {
-                name: "Mock Project",
-                technologies: ["React"],
-                contribution: "Built the frontend.",
-              }
-            ],
-            internships: [],
-            certifications: [],
-            achievements: [],
-            activities: []
-          },
-          truthGuard: { pass: true, flags: [] }
-        };
+      if (!response.ok) {
+        throw new Error(
+          json.error || "Portfolio analysis failed."
+        );
       }
+      data = json;
 
       window.sessionStorage.setItem(
         "portfolio2resume_analysis",
