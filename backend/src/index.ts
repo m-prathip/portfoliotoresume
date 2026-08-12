@@ -64,8 +64,19 @@ const startServer = async () => {
     const schema = fs.readFileSync(schemaPath, "utf-8");
     await pool.query(schema);
     console.log("Database schema initialized successfully.");
+
+    // Auto-seed if templates are missing
+    const res = await pool.query("SELECT COUNT(*) FROM templates");
+    if (parseInt(res.rows[0].count) === 0) {
+      console.log("Templates table is empty. Auto-seeding database...");
+      const { execSync } = require("child_process");
+      execSync("npx --yes tsx src/db/seed/seedTemplates.ts", { stdio: "inherit", cwd: process.cwd() });
+      execSync("npx --yes tsx src/db/seed/seedStylePresets.ts", { stdio: "inherit", cwd: process.cwd() });
+      execSync("npx --yes tsx src/db/seed/seedTemplateLibrary.ts", { stdio: "inherit", cwd: process.cwd() });
+      console.log("Database seeded successfully.");
+    }
   } catch (err) {
-    console.error("Failed to initialize schema. This might cause 500 errors if tables don't exist.", err);
+    console.error("Failed to initialize or seed schema:", err);
   }
 
   app.listen(port, host, () => {
