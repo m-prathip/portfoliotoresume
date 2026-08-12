@@ -18,9 +18,9 @@ const host = "0.0.0.0";
 
 app.use(
   cors({
-    origin:
-      process.env.CORS_ORIGIN ??
-      "http://localhost:3000",
+    origin: process.env.CORS_ORIGIN 
+      ? process.env.CORS_ORIGIN.split(",") 
+      : "*",
   }),
 );
 
