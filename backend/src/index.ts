@@ -53,7 +53,24 @@ app.use("/api/templates", templatesRouter);
 // Error handler must be last
 app.use(errorHandler);
 
+import fs from "fs";
+import path from "path";
+import { pool } from "./db/pool";
+
 // Start server
-app.listen(port, host, () => {
-  console.log(`Backend listening on http://${host}:${port}`);
-});
+const startServer = async () => {
+  try {
+    const schemaPath = path.join(process.cwd(), "src", "db", "schema.sql");
+    const schema = fs.readFileSync(schemaPath, "utf-8");
+    await pool.query(schema);
+    console.log("Database schema initialized successfully.");
+  } catch (err) {
+    console.error("Failed to initialize schema. This might cause 500 errors if tables don't exist.", err);
+  }
+
+  app.listen(port, host, () => {
+    console.log(`Backend listening on http://${host}:${port}`);
+  });
+};
+
+startServer();
