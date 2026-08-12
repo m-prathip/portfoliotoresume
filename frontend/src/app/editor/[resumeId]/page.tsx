@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { api } from "@/lib/api";
 import { useEditorStore } from "@/store/resumeStore";
 import { useAutosave } from "@/hooks/useAutosave";
@@ -14,6 +14,7 @@ import { ExportPanel } from "@/components/editor/ExportPanel";
 
 export default function EditorPage() {
   const params = useParams<{ resumeId: string }>();
+  const router = useRouter();
   const loadResume = useEditorStore((s) => s.loadResume);
   const setTitle = useEditorStore((s) => s.setTitle);
   const title = useEditorStore((s) => s.title);
@@ -25,6 +26,34 @@ export default function EditorPage() {
 
   useEffect(() => {
     if (!params.resumeId) return;
+
+    if (params.resumeId === "new") {
+      const stored = window.sessionStorage.getItem("portfolio2resume_analysis");
+      const userId = window.localStorage.getItem("portfolio2resume_user_id");
+      const portfolioId = window.sessionStorage.getItem("portfolio2resume_portfolio_id");
+
+      if (stored && userId) {
+        try {
+          const data = JSON.parse(stored);
+          api
+            .createResume({
+              user_id: userId,
+              portfolio_id: portfolioId ?? undefined,
+              title: "Untitled Resume",
+              content: data.structured,
+            })
+            .then(({ resume }) => {
+              loadResume(resume);
+              router.replace(`/editor/${resume.id}`);
+            })
+            .catch((err) => console.error("Failed to create resume", err));
+        } catch (e) {
+          console.error("Failed to parse mock data");
+        }
+      }
+      return;
+    }
+
     api
       .getResume(params.resumeId)
       .then(({ resume }) => loadResume(resume))
