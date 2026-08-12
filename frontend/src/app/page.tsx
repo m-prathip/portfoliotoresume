@@ -74,7 +74,7 @@ export default function Home() {
 
         window.localStorage.setItem(
           "portfolio2resume_user_id",
-          userId
+          userId as string
         );
       }
 
