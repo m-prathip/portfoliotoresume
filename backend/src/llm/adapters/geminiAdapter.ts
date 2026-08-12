@@ -9,9 +9,10 @@ export class GeminiAdapter implements LlmAdapter {
     if (!apiKey) {
       throw new LlmError("GEMINI_API_KEY is not set", "gemini");
     }
-    this.apiKey = apiKey;
-    // Strip 'models/' prefix if the user accidentally included it in their environment variable
-    this.model = model.replace(/^models\//, "");
+    // Aggressively trim API key to prevent hidden spaces/newlines from breaking auth
+    this.apiKey = apiKey.trim();
+    // Strip 'models/' prefix if the user accidentally included it, and aggressively trim spaces/carriage returns
+    this.model = model.trim().replace(/^models\//, "").trim();
   }
 
   async complete(options: LlmCompletionOptions): Promise<string> {
@@ -43,8 +44,8 @@ export class GeminiAdapter implements LlmAdapter {
 
     while (true) {
       try {
-        // Use v1 API instead of v1beta, and ensure the model string is correct
-        const res = await fetch(`https://generativelanguage.googleapis.com/v1/models/${currentModel}:generateContent?key=${this.apiKey}`, {
+        // Use v1beta API since it has better global availability for Gemini 1.5 features
+        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${currentModel}:generateContent?key=${this.apiKey}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
