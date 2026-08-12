@@ -131,10 +131,15 @@ export function SkillsEditor() {
 
   const setCategory = (oldKey: string, newKey: string) =>
     updateContent((c) => {
-      const next = { ...c.skills };
-      const val = next[oldKey];
-      delete next[oldKey];
-      next[newKey] = val;
+      if (oldKey === newKey || newKey.trim() === "") return c;
+      const next: Record<string, string[]> = {};
+      for (const [k, v] of Object.entries(c.skills)) {
+        if (k === oldKey) {
+          next[newKey] = v;
+        } else {
+          next[k] = v;
+        }
+      }
       return { ...c, skills: next };
     });
 
@@ -155,8 +160,8 @@ export function SkillsEditor() {
 
   return (
     <div className="flex flex-col gap-2">
-      {entries.map(([category, items]) => (
-        <EntryCard key={category} onRemove={() => remove(category)}>
+      {entries.map(([category, items], index) => (
+        <EntryCard key={index} onRemove={() => remove(category)}>
           <Field label="Category" value={category} onChange={(v) => setCategory(category, v)} />
           <CsvField label="Skills (comma-separated)" items={items} onChange={(v) => setItems(category, v)} />
         </EntryCard>

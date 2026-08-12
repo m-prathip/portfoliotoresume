@@ -78,10 +78,10 @@ function SortableSectionRow({ sectionKey }: { sectionKey: SectionKey }) {
         <button
           type="button"
           onClick={() => setExpanded((e) => !e)}
-          className="flex flex-1 items-center justify-between text-left pr-20"
+          className="flex flex-1 items-center justify-between text-left"
         >
           <span className="text-sm font-medium text-slate-800">{label}</span>
-          <span className="text-xs text-slate-400">{count} {count === 1 ? "item" : "items"} {expanded ? "▲" : "▼"}</span>
+          <span className="text-xs text-slate-400 mr-16">{count} {count === 1 ? "item" : "items"} {expanded ? "▲" : "▼"}</span>
         </button>
       </div>
       {expanded && (
