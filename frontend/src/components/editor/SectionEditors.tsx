@@ -1,4 +1,5 @@
 "use client";
+import React from "react";
 
 import { useEditorStore } from "@/store/resumeStore";
 import {
@@ -97,6 +98,32 @@ export function EducationEditor() {
   );
 }
 
+function CsvField({ label, items, onChange }: { label: string; items: string[]; onChange: (items: string[]) => void }) {
+  const [val, setVal] = React.useState(() => items.join(", "));
+
+  React.useEffect(() => {
+    const currentParsed = val.split(",").map(s => s.trim()).filter(Boolean);
+    if (JSON.stringify(currentParsed) !== JSON.stringify(items)) {
+      setVal(items.join(", "));
+    }
+  }, [items, val]);
+
+  return (
+    <label className="flex flex-col gap-1 text-xs text-slate-600">
+      {label}
+      <input
+        type="text"
+        value={val}
+        onChange={(e) => {
+          setVal(e.target.value);
+          onChange(e.target.value.split(",").map((s) => s.trim()).filter(Boolean));
+        }}
+        className="rounded-md border border-slate-300 px-2 py-1.5 text-sm outline-none focus:border-slate-500"
+      />
+    </label>
+  );
+}
+
 export function SkillsEditor() {
   const skills = useEditorStore((s) => s.content.skills);
   const updateContent = useEditorStore((s) => s.updateContent);
@@ -111,10 +138,10 @@ export function SkillsEditor() {
       return { ...c, skills: next };
     });
 
-  const setItems = (key: string, csv: string) =>
+  const setItems = (key: string, items: string[]) =>
     updateContent((c) => ({
       ...c,
-      skills: { ...c.skills, [key]: csv.split(",").map((s) => s.trim()).filter(Boolean) },
+      skills: { ...c.skills, [key]: items },
     }));
 
   const remove = (key: string) =>
@@ -131,7 +158,7 @@ export function SkillsEditor() {
       {entries.map(([category, items]) => (
         <EntryCard key={category} onRemove={() => remove(category)}>
           <Field label="Category" value={category} onChange={(v) => setCategory(category, v)} />
-          <Field label="Skills (comma-separated)" value={items.join(", ")} onChange={(v) => setItems(category, v)} />
+          <CsvField label="Skills (comma-separated)" items={items} onChange={(v) => setItems(category, v)} />
         </EntryCard>
       ))}
       <AddButton onClick={add} label="Add skill category" />
