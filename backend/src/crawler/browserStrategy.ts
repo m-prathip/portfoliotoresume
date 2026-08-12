@@ -13,39 +13,19 @@ const NAV_TIMEOUT_MS = 15_000;
 export async function browserStrategy(rawUrl: string): Promise<CrawlResult> {
   const url = assertSafePublicUrl(rawUrl);
 
-  let chromium: typeof import("playwright").chromium;
   try {
-    ({ chromium } = await import("playwright"));
-  } catch (err) {
-    throw new CrawlError(
-      "Playwright is not installed. Run `npx playwright install --with-deps chromium`.",
-      rawUrl,
-      err,
-    );
-  }
-
-  const browser = await chromium.launch({ headless: true });
-  try {
-    const context = await browser.newContext({
-      userAgent: "ResumePlatformBot/1.0 (+portfolio-to-resume; respects robots.txt)",
-    });
-    const page = await context.newPage();
-
-    const response = await page.goto(url.toString(), {
-      waitUntil: "networkidle",
-      timeout: NAV_TIMEOUT_MS,
+    const res = await fetch(`https://r.jina.ai/${url.toString()}`, {
+      headers: { "user-agent": "ResumePlatformBot/1.0" },
     });
 
-    if (!response || !response.ok()) {
-      throw new CrawlError(`Browser navigation failed with status ${response?.status()}`, rawUrl);
+    if (!res.ok) {
+      throw new CrawlError(`Jina Reader failed with status ${res.status}`, rawUrl);
     }
 
-    const html = await page.content();
-    return { url: url.toString(), html, fetchedWith: "browser", statusCode: response.status() };
+    const markdown = await res.text();
+    return { url: url.toString(), html: markdown, fetchedWith: "browser", statusCode: res.status };
   } catch (err) {
     if (err instanceof CrawlError) throw err;
-    throw new CrawlError("Headless browser fetch failed", rawUrl, err);
-  } finally {
-    await browser.close();
+    throw new CrawlError("Jina Reader fetch failed", rawUrl, err);
   }
 }
