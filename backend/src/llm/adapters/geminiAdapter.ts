@@ -10,7 +10,8 @@ export class GeminiAdapter implements LlmAdapter {
       throw new LlmError("GEMINI_API_KEY is not set", "gemini");
     }
     this.apiKey = apiKey;
-    this.model = model;
+    // Strip 'models/' prefix if the user accidentally included it in their environment variable
+    this.model = model.replace(/^models\//, "");
   }
 
   async complete(options: LlmCompletionOptions): Promise<string> {
@@ -37,7 +38,8 @@ export class GeminiAdapter implements LlmAdapter {
     }
 
     try {
-      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${this.model}:generateContent?key=${this.apiKey}`, {
+      // Use v1 API instead of v1beta, and ensure the model string is correct
+      const res = await fetch(`https://generativelanguage.googleapis.com/v1/models/${this.model}:generateContent?key=${this.apiKey}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
