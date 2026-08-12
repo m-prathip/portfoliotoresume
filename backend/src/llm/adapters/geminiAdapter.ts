@@ -37,32 +37,45 @@ export class GeminiAdapter implements LlmAdapter {
         };
     }
 
-    try {
-      // Use v1 API instead of v1beta, and ensure the model string is correct
-      const res = await fetch(`https://generativelanguage.googleapis.com/v1/models/${this.model}:generateContent?key=${this.apiKey}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-      });
+    const fallbackModels = ["gemini-1.5-pro", "gemini-pro"];
+    let currentModel = this.model;
+    let attempt = 0;
 
-      if (!res.ok) {
-        const errBody = await res.text();
-        throw new LlmError(`Gemini API error ${res.status}: ${errBody}`, "gemini");
+    while (true) {
+      try {
+        // Use v1 API instead of v1beta, and ensure the model string is correct
+        const res = await fetch(`https://generativelanguage.googleapis.com/v1/models/${currentModel}:generateContent?key=${this.apiKey}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(body),
+        });
+
+        if (!res.ok) {
+          const errBody = await res.text();
+          // If the model is not found (404), try the next fallback model
+          if (res.status === 404 && errBody.includes("is not found") && attempt < fallbackModels.length) {
+            console.warn(`Model ${currentModel} not found. Falling back to ${fallbackModels[attempt]}...`);
+            currentModel = fallbackModels[attempt];
+            attempt++;
+            continue;
+          }
+          throw new LlmError(`Gemini API error ${res.status}: ${errBody}`, "gemini");
+        }
+
+        const data = await res.json();
+        
+        const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (!text) {
+          throw new LlmError("Gemini response contained no text content", "gemini");
+        }
+
+        return text;
+      } catch (err) {
+        if (err instanceof LlmError) throw err;
+        throw new LlmError(`Failed to call Gemini API using ${currentModel}`, "gemini", err);
       }
-
-      const data = await res.json();
-      
-      const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-      if (!text) {
-        throw new LlmError("Gemini response contained no text content", "gemini");
-      }
-
-      return text;
-    } catch (err) {
-      if (err instanceof LlmError) throw err;
-      throw new LlmError("Failed to call Gemini API", "gemini", err);
     }
   }
 }
