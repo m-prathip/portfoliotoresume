@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { query } from "../db/pool";
+import { pool } from "../db/pool";
 import crypto from "crypto";
 
 export const usersRouter = Router();
@@ -20,7 +20,7 @@ usersRouter.post("/", async (req, res, next) => {
     // For MVP guest access, generate a dummy password
     const dummyPasswordHash = crypto.randomBytes(16).toString("hex");
 
-    const result = await query(
+    const result = await pool.query(
       `INSERT INTO users (email, password_hash, full_name) 
        VALUES ($1, $2, $3) 
        RETURNING id, email, full_name, created_at`,
@@ -32,7 +32,7 @@ usersRouter.post("/", async (req, res, next) => {
     // If unique constraint violation, try to fetch the existing user
     if (err.code === '23505') {
        try {
-         const result = await query(
+         const result = await pool.query(
            `SELECT id, email, full_name, created_at FROM users WHERE email = $1`,
            [req.body.email]
          );
